@@ -3,49 +3,34 @@ package cn.pprocket.command
 import cn.pprocket.utils.NetWork
 import cn.pprocket.utils.HardWare
 import cn.pprocket.utils.OS
-import dev.jorel.commandapi.CommandAPICommand
-import dev.jorel.commandapi.CommandPermission
-import dev.jorel.commandapi.arguments.GreedyStringArgument
-import dev.jorel.commandapi.executors.CommandExecutor
 import org.bukkit.ChatColor
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
 import oshi.SystemInfo
 
-class CommandMain{
-     private var str = ""
+class CommandMain: CommandExecutor {
+    private var str = ""
     private fun DiskInfo(): String {
-        val list = SystemInfo().hardware.diskStores
-        var result = ""
-        for (disk in list){
-            result+=ChatColor.GREEN.toString() + disk.model + ": " + disk.size/1024/1024/1024 + "GB" + "\n"
+        try {
+            val list = SystemInfo().hardware.diskStores
+            var result = ""
+            for (disk in list) {
+                result += ChatColor.GREEN.toString() + disk.model + ": " + disk.size / 1024 / 1024 / 1024 + "GB" + "\n"
+                return result
+            }
+        } catch (e: ExceptionInInitializerError) {
+            return "未知"
         }
-        return result
-    }
-     fun onCall(){
-         val sub = CommandAPICommand("shell")
-             .withPermission(CommandPermission.OP)
-             .withArguments(GreedyStringArgument("command"))
-             .executes(CommandExecutor{sender,args ->
-                 val t = Thread(Runnable{
-                     val str = OS.run(args[0] as String?)
-                     sender.sendMessage(str)
-                 })
-                 t.start()
-             })
-         CommandAPICommand("aida")
-             .withPermission(CommandPermission.OP)
-             .executes(CommandExecutor { player, _ ->
-                     val t = Thread {
-                         player.sendMessage(getMsg())
-                     }
-                     t.start()
 
-             })
-             .withSubcommand(sub)
-             .register()
-     }
-     private fun  getMsg (): String {
-         val startTime = System.currentTimeMillis()
-         var str = """
+
+
+        return ""
+    }
+
+    private fun getMsg(): String {
+        val startTime = System.currentTimeMillis()
+        var str = """
                     ${ChatColor.GREEN}
                     ------------------CPU------------------
                     CPU型号: ${HardWare.CPU.getCPUName()}
@@ -73,13 +58,48 @@ class CommandMain{
                     ------------------磁盘------------------
                     
                 """.trimIndent()
-         str+=DiskInfo()
-         str+="""
+        str += DiskInfo()
+        str += """
                     
                     
                     耗时：${System.currentTimeMillis() - startTime}ms
                 """.trimIndent()
-         return str
+        return str
 
-     }
- }
+    }
+
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        if (!sender.isOp) {
+            sender.sendMessage("${ChatColor.RED}您没有使用此命令的权限")
+            return true
+        } else {
+            if (args.isEmpty()) {
+                val t = Thread {
+                    sender.sendMessage(getMsg())
+                }
+                t.start()
+            } else if (args[0] == "shell") {
+                Thread {
+                    sender.sendMessage(OS.run(getArgs(args.toList())))
+                }.start()
+            } else {
+                sender.sendMessage("${ChatColor.RED}无效的参数")
+            }
+
+        }
+
+        return true
+    }
+    private fun getArgs(args: List<String>): String {
+        var str = ""
+        for (arg in args) {
+            if (args[0] == arg) {
+                continue
+            }
+            str += "$arg "
+        }
+        return str
+    }
+}
+
+

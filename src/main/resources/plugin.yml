@@ -1,7 +1,8 @@
 name: AIDAMC
 version: '${project.version}'
 main: cn.pprocket.aidamc
-api-version: 1.18
 authors: [ PPRocket ]
 description: view your handware info in spigot
+commands:
+  aida:
 
