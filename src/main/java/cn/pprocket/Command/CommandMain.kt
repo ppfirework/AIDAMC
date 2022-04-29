@@ -1,8 +1,8 @@
-package cn.pprocket.Command
+package cn.pprocket.command
 
-import cn.pprocket.lib.HardWare
-import cn.pprocket.lib.Network
-import cn.pprocket.lib.OS
+import cn.pprocket.utils.NetWork
+import cn.pprocket.utils.HardWare
+import cn.pprocket.utils.OS
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.CommandPermission
 import dev.jorel.commandapi.arguments.GreedyStringArgument
@@ -67,8 +67,8 @@ class CommandMain{
                     服务端启动参数：${OS.getCommand()}
                     
                     ------------------网络------------------
-                    IP地址：${Network.getIP().ip}
-                    归属地：${Network.getIP().city}
+                    IP地址：${NetWork.getIP()}
+                    归属地：${NetWork.getLocation()}
                     
                     ------------------磁盘------------------
                     

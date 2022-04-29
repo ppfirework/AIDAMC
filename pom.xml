@@ -150,5 +150,10 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-http</artifactId>
+            <version>5.8.0.M4</version>
+        </dependency>
     </dependencies>
 </project>

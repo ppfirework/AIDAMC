@@ -1,6 +1,6 @@
 package cn.pprocket;
 
-import cn.pprocket.Command.CommandMain;
+import cn.pprocket.command.CommandMain;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIConfig;
 import org.bukkit.plugin.java.JavaPlugin;
