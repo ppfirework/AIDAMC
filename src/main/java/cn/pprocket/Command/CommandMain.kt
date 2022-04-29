@@ -54,6 +54,8 @@ class CommandMain{
                     ------------------内存------------------
                     内存总大小: ${HardWare.RAM.getTotalRAM()}GB
                     内存剩余大小: ${HardWare.RAM.getRestMemory()}GB
+                    内存频率: ${HardWare.RAM.getMemoryMhz()}MHz
+                    内存生产商：${HardWare.RAM.getMemoryProducer()}
                     
                     ------------------系统------------------
                     系统平台：${OS.getVersion()}
@@ -62,6 +64,7 @@ class CommandMain{
                     是否为虚拟机：${HardWare.isVirtualMachine()}
                     ${if (HardWare.isVirtualMachine()) "虚拟机类型：${HardWare.MainBoard.getBoardProducer()}" else "主板生产商：${HardWare.MainBoard.getBoardProducer()}"}
                     是否为root：${OS.isRoot()}
+                    服务端启动参数：${OS.getCommand()}
                     
                     ------------------网络------------------
                     IP地址：${Network.getIP().ip}
