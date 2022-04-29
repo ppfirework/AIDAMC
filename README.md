@@ -26,12 +26,7 @@
 
 # 截图
 
-![](https://imgbed-1254007525.cos.ap-nanjing.myqcloud.com/img/20220428170029.png)
-
-![](https://imgbed-1254007525.cos.ap-nanjing.myqcloud.com/img/20220428170201.png)
-
-![](https://imgbed-1254007525.cos.ap-nanjing.myqcloud.com/img/20220428171335.png)
-
-![](https://imgbed-1254007525.cos.ap-nanjing.myqcloud.com/img/20220428171514.png)
+![](https://imgbed-1254007525.cos.ap-nanjing.myqcloud.com/img/20220429222428.png)
+![](https://imgbed-1254007525.cos.ap-nanjing.myqcloud.com/img/20220429220854.png)
 
 [下载](https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBa2lMd2djRWVHYkRqaHdtTXktSGtuZkZONnNqP2U9em1rQ1Nu.jar)
