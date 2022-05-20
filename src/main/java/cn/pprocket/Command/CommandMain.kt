@@ -1,13 +1,22 @@
 package cn.pprocket.command
 
-import cn.pprocket.utils.NetWork
+import cn.pprocket.aidamc
+import cn.pprocket.utils.CpuInfo
 import cn.pprocket.utils.HardWare
+import cn.pprocket.utils.NetWork
 import cn.pprocket.utils.OS
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
+import org.bukkit.boss.BarColor
+import org.bukkit.boss.BarStyle
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
+import org.bukkit.plugin.java.JavaPlugin
 import oshi.SystemInfo
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class CommandMain: CommandExecutor {
     private var str = ""
@@ -28,13 +37,15 @@ class CommandMain: CommandExecutor {
         return ""
     }
 
-    private fun getMsg(): String {
+    public fun getMsg(): String {
+
         val startTime = System.currentTimeMillis()
         var str = """
                     ${ChatColor.GREEN}
                     ------------------CPU------------------
                     CPU型号: ${HardWare.CPU.getCPUName()}
                     CPU核心数: ${HardWare.CPU.getPhysicalProcessorCount()}
+                    CPU使用率：${BigDecimal(CpuInfo(HardWare.CPU.getCPU(), 1000L).used).setScale(2, RoundingMode.HALF_UP)}
                     
                     ------------------内存------------------
                     内存总大小: ${HardWare.RAM.getTotalRAM()}GB
@@ -82,6 +93,23 @@ class CommandMain: CommandExecutor {
                 Thread {
                     sender.sendMessage(OS.run(getArgs(args.toList())))
                 }.start()
+            } else if (args[0] == "bar") {
+                var bar = Bukkit.createBossBar("", BarColor.RED, BarStyle.SEGMENTED_20)
+                bar.addPlayer(sender as Player)
+                Bukkit.getScheduler().runTaskAsynchronously(getINSTANCE()) {
+                    val start = System.currentTimeMillis()
+                    sender.sendMessage("${ChatColor.GREEN}90秒后自动消失。")
+                    while (true) {
+                        var usage =  BigDecimal(CpuInfo(HardWare.CPU.getCPU(), 1000L).used).setScale(2, RoundingMode.HALF_UP)
+                        bar.title = "${ChatColor.GREEN}"+ usage.toString()
+                        Thread.sleep(1000)
+                        if ((System.currentTimeMillis() - start) >= 90*1000) {
+                            bar.removeAll()
+                            bar.isVisible = false
+                            break
+                        }
+                    }
+                }
             } else {
                 sender.sendMessage("${ChatColor.RED}无效的参数")
             }
@@ -90,15 +118,20 @@ class CommandMain: CommandExecutor {
 
         return true
     }
-    private fun getArgs(args: List<String>): String {
+
+     fun getArgs(args: List<String>): String? {
         var str = ""
         for (arg in args) {
             if (args[0] == arg) {
                 continue
             }
             str += "$arg "
+
         }
-        return str
+         return str
+    }
+    fun getINSTANCE(): aidamc? {
+        return JavaPlugin.getPlugin(aidamc::class.java)
     }
 }
 

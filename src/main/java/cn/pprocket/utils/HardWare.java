@@ -62,6 +62,9 @@ public class HardWare {
         public static String getMicroArchitecture() {
             return id.getMicroarchitecture();
         }
+        public static CentralProcessor getCPU() {
+            return cpu;
+        }
     }
 
     /**
