@@ -7,12 +7,11 @@ package cn.pprocket.utils;
 //
 
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 import oshi.hardware.CentralProcessor;
 
-public class CpuInfo {
+public class CPUInfo {
     private static final DecimalFormat LOAD_FORMAT = new DecimalFormat("#.00");
     private Integer cpuNum;
     private double toTal;
@@ -21,16 +20,16 @@ public class CpuInfo {
     private double wait;
     private double free;
     private String cpuModel;
-    private CpuTicks ticks;
+    private CPUTicks ticks;
 
-    public CpuInfo() {
+    public CPUInfo() {
     }
 
-    public CpuInfo(CentralProcessor processor, long waitingTime) {
+    public CPUInfo(CentralProcessor processor, long waitingTime) {
         this.init(processor, waitingTime);
     }
 
-    public CpuInfo(Integer cpuNum, double toTal, double sys, double user, double wait, double free, String cpuModel) {
+    public CPUInfo(Integer cpuNum, double toTal, double sys, double user, double wait, double free, String cpuModel) {
         this.cpuNum = cpuNum;
         this.toTal = toTal;
         this.sys = sys;
@@ -96,11 +95,11 @@ public class CpuInfo {
         this.cpuModel = cpuModel;
     }
 
-    public CpuTicks getTicks() {
+    public CPUTicks getTicks() {
         return this.ticks;
     }
 
-    public void setTicks(CpuTicks ticks) {
+    public void setTicks(CPUTicks ticks) {
         this.ticks = ticks;
     }
 
@@ -113,7 +112,7 @@ public class CpuInfo {
     }
 
     private void init(CentralProcessor processor, long waitingTime) {
-       CpuTicks ticks = new CpuTicks(processor, waitingTime);
+       CPUTicks ticks = new CPUTicks(processor, waitingTime);
         this.ticks = ticks;
         this.cpuNum = processor.getLogicalProcessorCount();
         this.cpuModel = processor.toString();

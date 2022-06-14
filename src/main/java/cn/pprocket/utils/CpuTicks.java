@@ -5,7 +5,7 @@ import oshi.hardware.CentralProcessor;
 import oshi.hardware.CentralProcessor.TickType;
 import oshi.util.Util;
 
-public class CpuTicks {
+public class CPUTicks {
     long idle;
     long nice;
     long irq;
@@ -15,7 +15,7 @@ public class CpuTicks {
     long user;
     long ioWait;
 
-    public CpuTicks(CentralProcessor processor, long waitingTime) {
+    public CPUTicks(CentralProcessor processor, long waitingTime) {
         long[] prevTicks = processor.getSystemCpuLoadTicks();
         Util.sleep(waitingTime);
         long[] ticks = processor.getSystemCpuLoadTicks();
