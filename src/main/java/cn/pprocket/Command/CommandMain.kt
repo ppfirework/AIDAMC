@@ -1,5 +1,6 @@
 package cn.pprocket.command
 
+import cn.hutool.http.HttpUtil
 import cn.pprocket.aidamc
 import cn.pprocket.utils.CPUInfo
 import cn.pprocket.utils.HardWare
@@ -14,6 +15,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.scheduler.BukkitRunnable
 import oshi.SystemInfo
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -140,6 +142,14 @@ class CommandMain: CommandExecutor {
                 })
             } else if(args[0]=="help") {
                 sender.sendMessage(helpInfo)
+            } else if(args[0]=="speedtest") {
+                if (!OS.getVersion().toLowerCase().contains("win")) {
+                    OS.run("chmod 777 " + aidamc.INSTANCE.f.absolutePath)
+                }
+                Bukkit.getScheduler().runTaskAsynchronously(aidamc.INSTANCE, Runnable {
+                    var msg = OS.run(aidamc.INSTANCE.f.absolutePath + " --accept-license")
+                    sender.sendMessage(msg)
+                })
             }
             else {
                 sender.sendMessage("${ChatColor.RED}无效的参数")

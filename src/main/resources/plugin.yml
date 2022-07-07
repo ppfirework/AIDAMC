@@ -5,4 +5,28 @@ authors: [ PPRocket ]
 description: view your handware info in spigot
 commands:
   aida:
+runtime-libraries:
+  libraries-folder: '@Server:libraries'  # 存放依赖的位置
+  libraries:
+    kotlin-stdlib: #随便写，不冲突就行
+      repository: https://maven.aliyun.com/repository/public   #仓库地址，可选，默认maven
+      groupId: org.jetbrains.kotlin
+      artifactId: kotlin-stdlib
+      version: 1.6.21
+    oshi:
+      repository: https://maven.aliyun.com/repository/public
+      groupId: com.github.oshi
+      artifactId: oshi-core
+      version: 6.1.6
+    hutool-http:
+      repository: https://maven.aliyun.com/repository/public
+      groupId: cn.hutool
+      artifactId: hutool-http
+      version: 5.8.3
+    hutool-core:
+      repository: https://maven.aliyun.com/repository/public
+      groupId: cn.hutool
+      artifactId: hutool-core
+      version: 5.8.3
+
 
